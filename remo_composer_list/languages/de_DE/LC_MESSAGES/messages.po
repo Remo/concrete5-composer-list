@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: concrete 5.6.0 | v1.0\n"
+"Report-Msgid-Bugs-To: remo.laubacher@gmail.com\n"
+"POT-Creation-Date: 2012-10-12 18:29+0200\n"
+"PO-Revision-Date: 2012-10-12 18:29+0200\n"
+"Last-Translator: remo.laubacher@gmail.com\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: /packages/remo_composer_list/controller.php:13
+msgid "Composer List"
+msgstr "Composer Liste"
+
+#: /packages/remo_composer_list/single_pages/dashboard/composer/list.php:9
+msgid "Composer Page List"
+msgstr "Composer Seitenliste"
+
+#: /packages/remo_composer_list/single_pages/dashboard/composer/list.php:22
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: /packages/remo_composer_list/controller.php:17
+msgid "Installs the Composer List Package."
+msgstr "Installiert das Composer Seitenlisten Paket."
+
+msgid "List"
+msgstr "Liste"
+
+msgid "List of Pages"
+msgstr "Seitenliste"
+
+#: /packages/remo_composer_list/single_pages/dashboard/composer/list.php:10
+msgid "Shows a list of all pages editable by the composer."
+msgstr "Zeigt alle Seiten welche mit dem Composer bearbeitbar sind."
+
+#: /packages/remo_composer_list/single_pages/dashboard/composer/list.php:36
+msgid "What type of page would you like to edit?"
+msgstr "Welchen Seitentyp möchten Sie bearbeiten?"
+
+#: /packages/remo_composer_list/single_pages/dashboard/composer/list.php:46
+msgid "You have not setup any page types for Composer."
+msgstr "Sie haben noch keine Seitentypen für Composer konfiguriert."

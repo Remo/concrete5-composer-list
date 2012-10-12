@@ -13,15 +13,13 @@ class DashboardComposerListController extends DashboardBaseController {
         $cap = Loader::helper('concrete/dashboard');
         if (!$cap->canAccessComposer()) return;
         
-        $collectionTypes = CollectionType::getList();
-        
-        $composerCollectionTypes = array();
-        foreach ($collectionTypes as $collectionType) {
-            $collectionType->setComposerProperties();
-            if ($collectionType->isCollectionTypeIncludedInComposer() == 1) {
-                $composerCollectionTypes[] = $collectionType;
-            }
+        $composerCollectionTypes = CollectionType::getComposerPageTypes();
+        if (count($composerCollectionTypes) == 1) {
+            $ct = $composerCollectionTypes[0];
+            $this->redirect('/dashboard/composer/list/show', $ct->getCollectionTypeID());
+            exit;
         }
+            
         $this->set('composerCollectionTypes', $composerCollectionTypes);
     }
     
