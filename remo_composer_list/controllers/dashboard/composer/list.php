@@ -9,12 +9,12 @@ class DashboardComposerListController extends DashboardBaseController {
      * 
      * @return type
      */
-    public function view() {
+    public function view($redirect=true) {
         $cap = Loader::helper('concrete/dashboard');
         if (!$cap->canAccessComposer()) return;
         
         $composerCollectionTypes = CollectionType::getComposerPageTypes();
-        if (count($composerCollectionTypes) == 1) {
+        if (count($composerCollectionTypes) == 1 && $redirect) {
             $ct = $composerCollectionTypes[0];
             $this->redirect('/dashboard/composer/list/show', $ct->getCollectionTypeID());
             exit;
@@ -31,7 +31,7 @@ class DashboardComposerListController extends DashboardBaseController {
      */
     public function show($ctID) {
         
-        $this->view();
+        $this->view(false);
         
         Loader::model('page_list');
         $pl = new PageList();
