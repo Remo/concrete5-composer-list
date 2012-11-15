@@ -37,9 +37,23 @@ class DashboardComposerListController extends DashboardBaseController {
         $pl = new PageList();
         $pl->filterByCollectionTypeID($ctID);
         
+        $this->set('ctID', $ctID);
         $this->set('pages', $pl->getPage());
         $this->set('pagesPagination', $pl->displayPaging(false, true));
         
+    }
+    
+    public function delete($ctID, $cID) {
+        $c = Page::getByID($cID);
+        $p = new Permissions($c);
+        if ($p->canDeletePage()) {
+            $this->set('message', t("Page deleted.")); 
+            $c->moveToTrash();
+        }
+        else {
+            $this->set('message', t("You don't have the right to delete this page!"));
+        }
+        $this->show($ctID);
     }
 
 }

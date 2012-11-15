@@ -15,12 +15,18 @@ if ($pages) {
     echo '<table class="table">';
     foreach ($pages as $page) {
 
-        $button = $ih->button(t('Edit'), View::url('/dashboard/composer/write/-/edit/', $page->getCollectionID()));
+        $button = $ih->button(t('Edit'), View::url('/dashboard/composer/write/-/edit/', $page->getCollectionID()), '', 'right primary');
+        $button .= $ih->button(t('Delete'), View::url('/dashboard/composer/list/delete/', $ctID, $page->getCollectionID()), '', 'right', 
+            array(
+                'style'=>'margin-left: 10px;',
+                'onclick'=>'return confirm(\'' . t('Are you sure you want to remove this page?') . '\')'
+            ));
 
         echo "
             <tr>
                 <th>{$page->getCollectionName()}</th>
-                <td>{$button}</td>
+                <th>{$page->getCollectionPath()}</th>
+                <td style=\"text-align: right;\">{$button}</td>
             </tr>";
     }
     echo '</table>';
