@@ -6,7 +6,7 @@ class RemoComposerListPackage extends Package {
 
     protected $pkgHandle = 'remo_composer_list';
     protected $appVersionRequired = '5.6.0';
-    protected $pkgVersion = '0.9.0';
+    protected $pkgVersion = '0.9.2';
     private $pkg;
 
     public function getPackageName() {
@@ -31,6 +31,12 @@ class RemoComposerListPackage extends Package {
         }        
     }
     
+    private function addBlock($blockHandle) {        
+        if (!is_object(BlockType::getByHandle($blockHandle))) {
+            BlockType::installBlockTypeFromPackage($blockHandle, $this->pkg);
+        }
+    }
+    
     public function install() {
         $this->pkg = parent::install();
         
@@ -39,6 +45,10 @@ class RemoComposerListPackage extends Package {
 
     public function upgrade() {
         parent::upgrade();
+        
+        $this->pkg = Package::getByHandle('remo_composer_list');
+
+        $this->addBlock('remo_attribute_edit');
     }
 
 }
