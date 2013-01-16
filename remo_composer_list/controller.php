@@ -5,8 +5,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class RemoComposerListPackage extends Package {
 
     protected $pkgHandle = 'remo_composer_list';
-    protected $appVersionRequired = '5.6.0';
-    protected $pkgVersion = '0.9.2';
+    protected $appVersionRequired = '5.5.2';
+    protected $pkgVersion = '0.9.3';
     private $pkg;
 
     public function getPackageName() {
@@ -25,10 +25,11 @@ class RemoComposerListPackage extends Package {
         }
         $sp = SinglePage::add($path, $this->pkg);
         $sp->update(array('cName' => $name, 'cDescription' => $description));
-        
-        if ($icon != '') {
-            $sp->setAttribute('icon_dashboard', $icon);
-        }        
+        if(version_compare(APP_VERSION,'5.6', '>')){
+            if ($icon != '') {
+                $sp->setAttribute('icon_dashboard', $icon);
+            }     
+        }   
     }
     
     private function addBlock($blockHandle) {        

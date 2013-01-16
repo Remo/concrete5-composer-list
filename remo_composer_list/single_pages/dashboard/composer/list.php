@@ -25,7 +25,7 @@ if ($pages) {
         echo "
             <tr>
                 <th>{$page->getCollectionName()}</th>
-                <th>{$page->getCollectionPath()}</th>
+                <td>{$page->getCollectionPath()}</td>
                 <td style=\"text-align: right;\">{$button}</td>
             </tr>";
     }
