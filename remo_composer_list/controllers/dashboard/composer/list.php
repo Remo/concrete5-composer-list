@@ -36,6 +36,7 @@ class DashboardComposerListController extends DashboardBaseController {
         Loader::model('page_list');
         $pl = new PageList();
         $pl->filterByCollectionTypeID($ctID);
+        $pl->sortByName();
         
         $this->set('ctID', $ctID);
         $this->set('pages', $pl->getPage());
