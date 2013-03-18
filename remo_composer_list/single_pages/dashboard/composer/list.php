@@ -32,9 +32,27 @@ if ($pages && $displaySearchBox) {
 <div class="ccm-pane-body">
     <?php
     if ($pages) {
-        echo '<table class="table">';
+        
+        $previousParentID = -1;
+        
         foreach ($pages as $page) {
 
+            if ($previousParentID != $page->getCollectionParentID()) {
+                $previousParentID = $page->getCollectionParentID();
+                $parentPage = Page::getByID($previousParentID);
+                
+                if ($previousParentID > -1) {
+                    echo '</tbody></table>';
+                }
+                
+                echo "<table class=\"table composer-list-sortable\">";
+                if ($ctPublishMethod != 'PARENT') {
+                    echo "<thead><tr><th colspan=\"2\">{$parentPage->getCollectionName()}</th></tr></thead>";
+                }
+                echo "<tbody>";
+            }
+            
+            
             $button = $ih->button(t('Edit'), View::url('/dashboard/composer/write/-/edit/', $page->getCollectionID()), '', 'right primary');
             $button .= $ih->button(t('Delete'), View::url('/dashboard/composer/list/delete/', $ctID, $page->getCollectionID()), '', 'right', array(
                 'style' => 'margin-left: 10px;',
@@ -42,13 +60,16 @@ if ($pages && $displaySearchBox) {
             ));
 
             echo "
-            <tr>
-                <th>{$page->getCollectionName()}</th>
-                <td>{$page->getCollectionPath()}</td>
-                <td style=\"text-align: right;\">{$button}</td>
+            <tr id=\"cID-{$page->getCollectionID()}\">
+                <th style=\"width: 30%;\">{$page->getCollectionName()}</th>
+                <td style=\"width: 50%;\">{$page->getCollectionPath()}</td>
+                <td style=\"width: 20%; text-align: right;\">{$button}</td>
             </tr>";
         }
-        echo '</table>';
+        
+        if ($previousParentID > -1) {
+            echo '</table>';
+        }
 
         echo $pagesPagination;
     } else {

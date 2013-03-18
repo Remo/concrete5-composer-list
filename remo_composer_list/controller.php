@@ -42,7 +42,6 @@ class RemoComposerListPackage extends Package {
         $this->pkg = parent::install();
         
         $this->addSinglePage('/dashboard/composer/list', t('List'), t('List of Pages'), 'icon-list');
-        $this->addSinglePage('/dashboard/composer/sort', t('Sort'), t('Sort composer pages'), 'icon-random');
     }
 
     public function upgrade() {
@@ -51,8 +50,6 @@ class RemoComposerListPackage extends Package {
         $this->pkg = Package::getByHandle('remo_composer_list');
 
         $this->addBlock('remo_attribute_edit');
-        
-        $this->addSinglePage('/dashboard/composer/sort', t('Sort'), t('Sort composer pages'), 'icon-random');
     }
 
 }

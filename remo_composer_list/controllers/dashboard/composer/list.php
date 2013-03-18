@@ -42,13 +42,22 @@ class DashboardComposerListController extends DashboardBaseController {
             $pl->filterByName($cvName);
         }
         
-        $pl->sortByName();
+        $pl->sortByMultiple('p1.cParentID asc', 'p1.cDisplayOrder asc'); 
+        
+        $ct = CollectionType::getByID($ctID);
         
         $this->set('ctID', $ctID);
+        $this->set('ctPublishMethod', $ct->getCollectionTypeComposerPublishMethod());
         $this->set('pages', $pl->getPage());
         $this->set('displaySearchBox', $this->displaySearchBox());
         $this->set('pagesPagination', $pl->displayPaging(false, true));
         
+        if (!array_key_exists('cvName', $_REQUEST)) {
+            $hh = Loader::helper('html');
+            
+            $this->addHeaderItem($hh->css('composer.sort.css', 'remo_composer_list'));
+            $this->addHeaderItem($hh->javascript('composer.sort.js', 'remo_composer_list'));
+        }               
     }
     
     protected function displaySearchBox() {
