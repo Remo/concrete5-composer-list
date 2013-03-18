@@ -1,3 +1,6 @@
 .composer-list-sortable .ui-sortable > * {
     cursor: s-resize;
 }
+.composer-list-sortable .ui-sortable tr{
+    cursor:move;
+}
