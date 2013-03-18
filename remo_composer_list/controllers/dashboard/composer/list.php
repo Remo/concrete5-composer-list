@@ -52,7 +52,7 @@ class DashboardComposerListController extends DashboardBaseController {
         $this->set('displaySearchBox', $this->displaySearchBox());
         $this->set('pagesPagination', $pl->displayPaging(false, true));
         
-        if (!array_key_exists('cvName', $_REQUEST)) {
+        if (!array_key_exists('cvName', $_REQUEST) || $cvName == '') {
             $hh = Loader::helper('html');
             
             $this->addHeaderItem($hh->css('composer.sort.css', 'remo_composer_list'));
