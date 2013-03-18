@@ -7,7 +7,7 @@ $ih = Loader::helper('concrete/interface');
 echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
         t('Composer Page List'), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
 
-if ($pages) {
+if ($pages && $displaySearchBox) {
     ?>
 
     <div class="ccm-pane-options">

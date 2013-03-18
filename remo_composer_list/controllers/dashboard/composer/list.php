@@ -46,8 +46,13 @@ class DashboardComposerListController extends DashboardBaseController {
         
         $this->set('ctID', $ctID);
         $this->set('pages', $pl->getPage());
+        $this->set('displaySearchBox', $this->displaySearchBox());
         $this->set('pagesPagination', $pl->displayPaging(false, true));
         
+    }
+    
+    protected function displaySearchBox() {
+        return !defined('SHOW_COMPOSER_LIST_SEARCH_BOX') || SHOW_COMPOSER_LIST_SEARCH_BOX;
     }
     
     public function delete($ctID, $cID) {
