@@ -36,6 +36,12 @@ class DashboardComposerListController extends DashboardBaseController {
         Loader::model('page_list');
         $pl = new PageList();
         $pl->filterByCollectionTypeID($ctID);
+        
+        if (array_key_exists('cvName', $_REQUEST)) {
+            $cvName = Loader::helper('text')->sanitize($_REQUEST['cvName']);
+            $pl->filterByName($cvName);
+        }
+        
         $pl->sortByName();
         
         $this->set('ctID', $ctID);
