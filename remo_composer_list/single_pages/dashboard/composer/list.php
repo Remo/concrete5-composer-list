@@ -19,7 +19,7 @@ if ($pages && $displaySearchBox) {
                         <input id="cvName" type="text" name="cvName" value="" style="width: 120px" class="ccm-input-text">		
                     </div>
                     <?php
-                    echo $ih->submit(t('Search'), false, 'left', null, array('style' => 'margin-left: 10px;'));
+                    echo $ih->submit(t('Search'), false, 'left', null, array('style'=>'margin-left: 10px;'));
                     ?>
                 </div>
             </div>     
@@ -32,26 +32,27 @@ if ($pages && $displaySearchBox) {
 <div class="ccm-pane-body">
     <?php
     if ($pages) {
-
+        
         $previousParentID = -1;
-
+        
         foreach ($pages as $page) {
 
             if ($previousParentID != $page->getCollectionParentID()) {
                 $previousParentID = $page->getCollectionParentID();
                 $parentPage = Page::getByID($previousParentID);
-
+                
                 if ($previousParentID > -1) {
                     echo '</tbody></table>';
                 }
-
+                
                 echo "<table class=\"table composer-list-sortable\">";
                 if ($ctPublishMethod != 'PARENT') {
-                    echo "<thead><tr><th colspan=\"2\">{$parentPage->getCollectionName()}</th></tr></thead>";
+                    echo "<thead><tr><th colspan=\"4\">{$parentPage->getCollectionName()}</th></tr></thead>";
                 }
                 echo "<tbody>";
             }
-
+            
+            
             $button_edit = $ih->button(t('Edit'), View::url('/dashboard/composer/write/-/edit/', $page->getCollectionID()), '', 'right primary');
             $button_delete = $ih->button(t('Delete'), View::url('/dashboard/composer/list/delete/', $ctID, $page->getCollectionID()), '', 'right', array(
                 'style' => 'margin-left: 10px;',
@@ -66,7 +67,7 @@ if ($pages && $displaySearchBox) {
                 <td style=\"text-align: right;width:70px;\">{$button_delete}</td>
             </tr>";
         }
-
+        
         if ($previousParentID > -1) {
             echo '</table>';
         }
