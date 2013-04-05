@@ -5,13 +5,13 @@ $nh = Loader::helper('navigation');
 $ih = Loader::helper('concrete/interface');
 
 echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
-        t('Composer Page List'), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
+        t($composerListTitel . ' ') . t('List'), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
 
-if ($pages && $displaySearchBox) {
+if ($pages && $displaySearchBox || $emptyList) {
     ?>
 
     <div class="ccm-pane-options">
-        <form class="form-horizontal" method="post">
+        <form class="form-horizontal" action="<?php echo $this->action('show/' . $ctID); ?>" method="post">
             <div class="ccm-pane-options-permanent-search">
                 <div class="span5">
                     <label for="cvName" class="control-label">Page Name</label>		
@@ -19,7 +19,7 @@ if ($pages && $displaySearchBox) {
                         <input id="cvName" type="text" name="cvName" value="" style="width: 120px" class="ccm-input-text">		
                     </div>
                     <?php
-                    echo $ih->submit(t('Search'), false, 'left', null, array('style'=>'margin-left: 10px;'));
+                    echo $ih->submit(t('Search'), false, 'left', null, array('style' => 'margin-left: 10px;'));
                     ?>
                 </div>
             </div>     
@@ -73,6 +73,8 @@ if ($pages && $displaySearchBox) {
         }
 
         echo $pagesPagination;
+    } else if ($emptyList) {
+        echo t('No pages found.');
     } else {
         if (count($composerCollectionTypes) > 0) {
             echo '<h3>' . t('What type of page would you like to edit?') . '</h3>';
