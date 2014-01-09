@@ -3,6 +3,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 $nh = Loader::helper('navigation');
 $ih = Loader::helper('concrete/interface');
+$fh = Loader::helper('form');
+$uh = Loader::helper('concrete/urls');
 
 echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
     t($composerListTitel . ' ') . t('List'), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
@@ -21,6 +23,17 @@ if ($pages && $displaySearchBox || $emptyList) {
                     <?php
                     echo $ih->submit(t('Search'), false, 'left', null, array('style' => 'margin-left: 10px;'));
                     ?>
+                </div>
+                <div class="span4" style="text-align: right;">
+                    <a dialog-title="<?php echo t('Customize Columns')?>" 
+                       dialog-modal="true"
+                       dialog-width="600" 
+                       dialog-height="450" 
+                       class="composer-list-dialog"
+                       href="<?php echo $uh->getToolsURL('customize_columns', 'remo_composer_list')?>?ctID=<?php echo $ctID?>">
+                        <span class="ccm-menu-icon ccm-icon-properties"></span>
+                        <?php echo t('Customize Columns')?>
+                    </a>
                 </div>
             </div>     
             <div class="clearfix ccm-pane-options-content"></div>
@@ -63,8 +76,47 @@ if ($pages && $displaySearchBox || $emptyList) {
                 ));
                 ?>
                 <tr id="cID-<?php echo $page->getCollectionID()?>">
-                    <th style="width: 30%;"><?php echo $page->getCollectionName()?></th>
-                    <td style="width: 50%;"><?php echo $page->getCollectionPath()?></td>
+                    <?php
+                    if (is_array($customColumns) && !empty($customColumns)) {
+                        foreach ($customColumns as $customColumn) {
+                            ?>
+                            <td><?php
+                                switch ($customColumn) {
+                                    case 'sp_pageType':
+                                        echo $page->getCollectionTypeName();
+                                        break;
+                                    case 'sp_pageName':
+                                        echo $page->getCollectionName();
+                                        break;
+                                    case 'sp_pagePath':
+                                        echo $page->getCollectionPath();
+                                        break;
+                                    case 'sp_pageDateCreated':
+                                        echo $page->getCollectionDateAdded();
+                                        break;
+                                    case 'sp_pageDateModified':
+                                        echo $page->getCollectionDateLastModified();
+                                        break;
+                                    case 'sp_pageOwner':
+                                        $uID = $page->getCollectionUserID();
+                                        if ($uID) {
+                                            $ui = UserInfo::getByID($uID);
+                                            echo $ui->getUserName();
+                                        }
+                                        break;
+                                    default:
+                                        echo $page->getAttribute(substr($customColumn, 3), 'display');
+                                        break;
+                                }
+                                ?>
+                            </td><?php
+                        }
+                    } else {
+                        ?>
+                        <th style="width: 30%;"><?php echo $page->getCollectionName()?></th>
+                        <td style="width: 50%;"><?php echo $page->getCollectionPath()?></td>
+                    <?php }
+                    ?>
                     <td style="width: 20%; text-align: right;\"><?php echo $button_edit?></td>
                         <td style="text-align: right;width:70px;\"><?php echo $button_delete?></td>
                 </tr>
@@ -92,7 +144,7 @@ if ($pages && $displaySearchBox || $emptyList) {
             }
             ?>
         </ul>
-        <?php } else {
+    <?php } else {
         ?>
         <p><?php echo t('You have not setup any page types for Composer.')?>
         </p>

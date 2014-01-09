@@ -56,12 +56,17 @@ class DashboardComposerListController extends DashboardBaseController {
         }
         $ct = CollectionType::getByID($ctID);
 
+        // add all necessary header items like JavaScript and CSS files
         if (!array_key_exists('cvName', $_REQUEST) || $cvName == '') {
             $hh = Loader::helper('html');
             $this->addHeaderItem($hh->css('composer.sort.css', 'remo_composer_list'));
             $this->addHeaderItem($hh->javascript('composer.sort.js', 'remo_composer_list'));
         }
+        
+        $this->addHeaderItem($hh->javascript('composer.overview.js', 'remo_composer_list'));
 
+        // add variables used by view
+        $this->set('customColumns', $this->loadCustomColumns($ctID));
         $this->set('ctID', $ctID);
         $this->set('ctPublishMethod', $ct->getCollectionTypeComposerPublishMethod());
         $this->set('pages', $pages);
@@ -72,6 +77,45 @@ class DashboardComposerListController extends DashboardBaseController {
 
     protected function displaySearchBox() {
         return !defined('SHOW_COMPOSER_LIST_SEARCH_BOX') || SHOW_COMPOSER_LIST_SEARCH_BOX;
+    }
+    
+    /**
+     * Puts the custom configuration for a page type into the config table.
+     * Needs two request variables, $ctID to reference the correct page type
+     * and $selectedAttributes containing all selected attributes
+     */
+    public function saveCustomColumns() {
+        // get existing config
+        $selectedColumns = $this->loadCustomColumns();
+
+        // merge new selection for page type into existing variable
+        $ctID = $this->post('ctID');        
+        $selectedColumns[$ctID] = $_REQUEST['selectedAttributes'];
+        
+        // save new configuration
+        $pkg = Package::getByHandle('remo_composer_list');        
+        $pkg->saveConfig('SELECTED_COLUMNS', serialize($selectedColumns));
+        
+        die();
+    }
+    
+    /**
+     * Returns all selected columns for the page type specified by $ctID.
+     * In case $ctID is omitted, this function will return all selected
+     * columns for all page types.
+     * 
+     * @param int $ctID
+     * @return array
+     */
+    public function loadCustomColumns($ctID = false) {
+        // get existing config
+        $pkg = Package::getByHandle('remo_composer_list');        
+        $selectedColumns = unserialize($pkg->config('SELECTED_COLUMNS'));
+        
+        if ($ctID) {
+            return $selectedColumns[$ctID];
+        }
+        return $selectedColumns;
     }
 
     public function delete($ctID, $cID) {
