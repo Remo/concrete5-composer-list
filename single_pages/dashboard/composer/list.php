@@ -7,7 +7,7 @@ $fh = Loader::helper('form');
 $uh = Loader::helper('concrete/urls');
 
 echo Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(
-    t($composerListTitel . ' ') . t('List'), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
+    t('%s List', $composerListTitel), t('Shows a list of all pages editable by the composer.'), 'span10 offset1', false);
 
 if ($pages && $displaySearchBox || $emptyList) {
     ?>
