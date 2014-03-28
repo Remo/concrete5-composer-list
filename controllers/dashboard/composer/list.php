@@ -31,6 +31,9 @@ class DashboardComposerListController extends DashboardBaseController {
      * @param int $ctID ID of collection type
      */
     public function show($ctID) {
+	$hh = Loader::helper('html');
+	$th = Loader::helper('text');
+	    
         $emptyList = false;
         $this->view(false);
 
@@ -39,7 +42,8 @@ class DashboardComposerListController extends DashboardBaseController {
         $pl->filterByCollectionTypeID($ctID);
 
         if (array_key_exists('cvName', $_REQUEST)) {
-            $cvName = Loader::helper('text')->sanitize($_REQUEST['cvName']);
+            $cvName = $th->sanitize($_REQUEST['cvName']);
+	    $this->set('cvName', $cvName);
             $pl->filterByName($cvName);
             if (count($pl->getPage()) <= 0) {
                 $pl = new PageList();
@@ -57,8 +61,7 @@ class DashboardComposerListController extends DashboardBaseController {
         $ct = CollectionType::getByID($ctID);
 
         // add all necessary header items like JavaScript and CSS files
-        if (!array_key_exists('cvName', $_REQUEST) || $cvName == '') {
-            $hh = Loader::helper('html');
+        if (!array_key_exists('cvName', $_REQUEST) || $cvName == '') {            
             $this->addHeaderItem($hh->css('composer.sort.css', 'remo_composer_list'));
             $this->addHeaderItem($hh->javascript('composer.sort.js', 'remo_composer_list'));
         }

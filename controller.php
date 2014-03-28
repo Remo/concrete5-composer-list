@@ -6,7 +6,7 @@ class RemoComposerListPackage extends Package {
 
     protected $pkgHandle = 'remo_composer_list';
     protected $appVersionRequired = '5.5.2';
-    protected $pkgVersion = '0.9.4';
+    protected $pkgVersion = '0.9.5';
     private $pkg;
 
     public function getPackageName() {
@@ -42,6 +42,7 @@ class RemoComposerListPackage extends Package {
         $this->pkg = parent::install();
         
         $this->addSinglePage('/dashboard/composer/list', t('List'), t('List of Pages'), 'icon-list');
+	$this->addBlock('remo_attribute_edit');
     }
 
     public function upgrade() {

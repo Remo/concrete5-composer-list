@@ -18,7 +18,7 @@ if ($pages && $displaySearchBox || $emptyList) {
                 <div class="span5">
                     <label for="cvName" class="control-label">Page Name</label>		
                     <div class="controls">
-                        <input id="cvName" type="text" name="cvName" value="" style="width: 120px" class="ccm-input-text">		
+                        <input id="cvName" value="<?php echo h($cvName); ?>" type="text" name="cvName" value="" style="width: 120px" class="ccm-input-text">		
                     </div>
                     <?php
                     echo $ih->submit(t('Search'), false, 'left', null, array('style' => 'margin-left: 10px;'));
