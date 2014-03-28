@@ -5,8 +5,8 @@ $(document).ready(function() {
             $(this).width($(this).width());
         });
         return ui;
-    };    
-    
+    };
+
     $(".composer-list-sortable > tbody").sortable({
         helper: tableSortHelper,
         update: function(event, ui) {

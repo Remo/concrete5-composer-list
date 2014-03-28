@@ -27,48 +27,48 @@ $attributeList = CollectionAttributeKey::getList();
 <div class="ccm-ui row-fluid">
     <form>
         <div class="span8" id="remo-composer-list-attributes">
-            <h3><?php echo t('Choose Headers')?></h3>
+            <h3><?php echo t('Choose Headers') ?></h3>
 
             <div class="clearfix">
-                <label><?php echo t('Standard Properties')?></label>
+                <label><?php echo t('Standard Properties') ?></label>
                 <div class="input">
                     <ul class="inputs-list">
-                        <?php foreach ($standardProperties as $standardPropertyHandle => $standardProperty) {?>
+                        <?php foreach ($standardProperties as $standardPropertyHandle => $standardProperty) { ?>
                             <li>
-                                <label><?php echo $fh->checkbox('sp_' . $standardPropertyHandle, 1, in_array('sp_' . $standardPropertyHandle, $selectedColumns))?> 
-                                    <span><?php echo $standardProperty?></span>
+                                <label><?php echo $fh->checkbox('sp_' . $standardPropertyHandle, 1, in_array('sp_' . $standardPropertyHandle, $selectedColumns)) ?> 
+                                    <span><?php echo $standardProperty ?></span>
                                 </label>
                             </li>
-                        <?php }?>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
 
             <div class="clearfix">
-                <label><?php echo t('Additional Attributes')?></label>
+                <label><?php echo t('Additional Attributes') ?></label>
                 <div class="input">
                     <ul class="inputs-list">
-                        <?php foreach ($attributeList as $attribute) {?>
+                        <?php foreach ($attributeList as $attribute) { ?>
                             <li>
                                 <label>
-                                    <?php echo $fh->checkbox('ak_' . $attribute->getAttributeKeyHandle(), 1, in_array('ak_' . $attribute->getAttributeKeyHandle(), $selectedColumns))?>
-                                    <span><?php echo $attribute->getAttributeKeyName()?></span>
+                                    <?php echo $fh->checkbox('ak_' . $attribute->getAttributeKeyHandle(), 1, in_array('ak_' . $attribute->getAttributeKeyHandle(), $selectedColumns)) ?>
+                                    <span><?php echo $attribute->getAttributeKeyName() ?></span>
                                 </label>
                             </li>
-                        <?php }?>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="span4">
-            <h3><?php echo t('Column Order')?></h3>
+            <h3><?php echo t('Column Order') ?></h3>
             <ul id="remo-composer-list-attributes-sortable" class="ccm-search-sortable-column-wrapper">
                 <?php
                 if (is_array($selectedColumns) && !empty($selectedColumns)) {
                     foreach ($selectedColumns as $selectedColumn) {
                         ?>
-                        <li id="sort_<?php echo $selectedColumn?>">
-                            <?php echo substr($selectedColumn, 0, 2) == 'ak' ? CollectionAttributeKey::getByHandle(substr($selectedColumn, 3))->getAttributeKeyName() : $standardProperties[substr($selectedColumn, 3)];?>
+                        <li id="sort_<?php echo $selectedColumn ?>">
+                            <?php echo substr($selectedColumn, 0, 2) == 'ak' ? CollectionAttributeKey::getByHandle(substr($selectedColumn, 3))->getAttributeKeyName() : $standardProperties[substr($selectedColumn, 3)]; ?>
                         </li>
                         <?php
                     }
@@ -80,15 +80,15 @@ $attributeList = CollectionAttributeKey::getList();
 </div>
 
 <div class="dialog-buttons">
-    <input type="button" id="remo-composer-list-save" class="btn primary" value="<?php echo t('Save')?>" />
+    <input type="button" id="remo-composer-list-save" class="btn primary" value="<?php echo t('Save') ?>" />
 </div>
 
 <script>
-    var remo = (function ($) {
+    var remo = (function($) {
         'use strict';
         return {
             composerList: {
-                init: function (ctID) {
+                init: function(ctID) {
                     $("#remo-composer-list-attributes input[type=checkbox]").change(this.checkboxStateChanged);
                     $("#remo-composer-list-save").click(this.saveColumns);
                     $("#remo-composer-list-attributes-sortable").sortable({
@@ -97,7 +97,7 @@ $attributeList = CollectionAttributeKey::getList();
                     });
                     remo.composerList.ctID = ctID;
                 },
-                checkboxStateChanged: function (event) {
+                checkboxStateChanged: function(event) {
                     var attrHandle = $(this).attr("name");
                     var attrName = $(this).next().text();
 
@@ -112,17 +112,17 @@ $attributeList = CollectionAttributeKey::getList();
                         $("#remo-composer-list-attributes-sortable #sort_" + attrHandle).remove();
                     }
                 },
-                saveColumns: function () {
+                saveColumns: function() {
                     var selectedAttributes = [];
-                    $("#remo-composer-list-attributes-sortable li").each(function (e, v) {
+                    $("#remo-composer-list-attributes-sortable li").each(function(e, v) {
                         selectedAttributes.push($(this).attr("id").substr(5));
 
                     });
-                    $.post('<?php echo View::url('/dashboard/composer/list/saveCustomColumns')?>',
-                       {
-                           "selectedAttributes": selectedAttributes,
-                           "ctID": remo.composerList.ctID
-                       }, function (data) {
+                    $.post('<?php echo View::url('/dashboard/composer/list/saveCustomColumns') ?>',
+                            {
+                                "selectedAttributes": selectedAttributes,
+                                "ctID": remo.composerList.ctID
+                            }, function(data) {
                         $.fn.dialog.closeTop();
                     });
                 }
@@ -130,5 +130,5 @@ $attributeList = CollectionAttributeKey::getList();
         }
     })($);
 
-    remo.composerList.init(<?php echo intval($ctID)?>);
+    remo.composerList.init(<?php echo intval($ctID) ?>);
 </script>

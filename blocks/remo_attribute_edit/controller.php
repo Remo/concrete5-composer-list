@@ -21,7 +21,7 @@ class RemoAttributeEditBlockController extends BlockController {
     }
 
     public function view() {
-
+        
     }
 
     public function save($data) {
@@ -29,7 +29,7 @@ class RemoAttributeEditBlockController extends BlockController {
 
         $db = Loader::db();
 
-        $page = Page::getCurrentPage();        
+        $page = Page::getCurrentPage();
         $cID = $page->getCollectionID();
 
         $page = Page::getByID($cID);

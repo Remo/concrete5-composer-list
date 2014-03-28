@@ -17,7 +17,7 @@ class RemoComposerListPackage extends Package {
         return t("Installs the Composer List Package.");
     }
 
-    private function addSinglePage($path, $name, $description = '', $icon='') {
+    private function addSinglePage($path, $name, $description = '', $icon = '') {
         Loader::model('single_page');
         $page = Page::getByPath($path);
         if (is_object($page) && $page->getCollectionID() > 0) {
@@ -25,29 +25,29 @@ class RemoComposerListPackage extends Package {
         }
         $sp = SinglePage::add($path, $this->pkg);
         $sp->update(array('cName' => $name, 'cDescription' => $description));
-        if(version_compare(APP_VERSION,'5.6', '>')){
+        if (version_compare(APP_VERSION, '5.6', '>')) {
             if ($icon != '') {
                 $sp->setAttribute('icon_dashboard', $icon);
-            }     
-        }   
+            }
+        }
     }
-    
-    private function addBlock($blockHandle) {        
+
+    private function addBlock($blockHandle) {
         if (!is_object(BlockType::getByHandle($blockHandle))) {
             BlockType::installBlockTypeFromPackage($blockHandle, $this->pkg);
         }
     }
-    
+
     public function install() {
         $this->pkg = parent::install();
-        
+
         $this->addSinglePage('/dashboard/composer/list', t('List'), t('List of Pages'), 'icon-list');
-	$this->addBlock('remo_attribute_edit');
+        $this->addBlock('remo_attribute_edit');
     }
 
     public function upgrade() {
         parent::upgrade();
-        
+
         $this->pkg = Package::getByHandle('remo_composer_list');
 
         $this->addBlock('remo_attribute_edit');
