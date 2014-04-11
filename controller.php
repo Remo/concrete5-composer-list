@@ -6,7 +6,7 @@ class RemoComposerListPackage extends Package {
 
     protected $pkgHandle = 'remo_composer_list';
     protected $appVersionRequired = '5.5.2';
-    protected $pkgVersion = '0.9.5';
+    protected $pkgVersion = '0.9.6';
     private $pkg;
 
     public function getPackageName() {
