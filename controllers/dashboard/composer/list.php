@@ -52,7 +52,8 @@ class DashboardComposerListController extends DashboardBaseController {
         }
 
         if (!$emptyList) {
-            $pl->sortByMultiple('p1.cParentID asc', 'p1.cDisplayOrder asc');
+            $pl->addtoQuery('left join Pages parent ON(p1.cParentID = parent.cID)');
+            $pl->sortByMultiple('parent.cDisplayOrder asc', 'p1.cDisplayOrder asc');
             $pages = $pl->getPage();
         } else {
             $pages = '';
