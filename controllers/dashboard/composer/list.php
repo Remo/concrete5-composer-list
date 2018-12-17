@@ -41,8 +41,10 @@ class DashboardComposerListController extends DashboardBaseController {
         $pl = new PageList();
         $pl->filterByCollectionTypeID($ctID);
 
+        $paginationVars = [];
         if (array_key_exists('cvName', $_REQUEST)) {
             $cvName = $th->sanitize($_REQUEST['cvName']);
+            $paginationVars['cvName'] = $cvName;
             $this->set('cvName', $cvName);
             $pl->filterByName($cvName);
             if (count($pl->getPage()) <= 0) {
@@ -76,7 +78,7 @@ class DashboardComposerListController extends DashboardBaseController {
         $this->set('pages', $pages);
         $this->set('displaySearchBox', $this->displaySearchBox());
         $this->set('composerListTitel', $ct->getCollectionTypeName());
-        $this->set('pagesPagination', $pl->displayPaging(false, true));
+        $this->set('pagesPagination', $pl->displayPaging(false, true, $paginationVars));
     }
 
     protected function displaySearchBox() {
